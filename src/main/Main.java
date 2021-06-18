@@ -1,9 +1,13 @@
+package main;
 
 import java.util.ArrayList;
 
+import data.Member;
+import display.ApplicationWindow;
+
 public class Main{
     public static void main(String args[]){
-        Window frame = new Window(500, 500);
+        ApplicationWindow frame = new ApplicationWindow(500, 500);
         
         Request.pull();
         ArrayList<Member> members = new ArrayList<Member>();

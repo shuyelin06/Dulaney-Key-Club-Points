@@ -1,3 +1,4 @@
+package main;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -6,7 +7,12 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 import java.util.HashMap;
 
-import org.json.*;
+import org.json.JSONObject;
+
+import data.*;
+import settings.Information;
+
+import org.json.JSONArray;
 
 public class Request{
     // Instance Variables
@@ -71,7 +77,7 @@ public class Request{
                 // Create a month datatype for each hashmap
                 Month month = new Month(key);
                 map.forEach((name, points) -> {
-                    Event event = new Event(name, points);
+                    ClubEvent event = new ClubEvent(name, points);
                     month.addEvent(event);
                 });
                 member.addMonth(month);
