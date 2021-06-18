@@ -6,8 +6,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 import java.util.HashMap;
 
-import libs.org.json.JSONArray;
-import libs.org.json.JSONObject;
+import org.json.*;
 
 public class Request{
     // Instance Variables
