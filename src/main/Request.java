@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import data.*;
 import settings.Information;
+import settings.Settings;
 
 import org.json.JSONArray;
 
@@ -43,13 +44,13 @@ public class Request{
 
     // Request HTTP data from the Google Sheets API
     public static void pull(){
-        final String sheet_ID = Information.sheetID;
-        final String API_Key = "key=" + Information.key;
-        final String Grid_Data = "includeGridData=" + "true";
+    	// Pulling the Spreadsheet ID and API Key from Settings
+        final String sheet_ID = (String) Settings.getSetting(new String[]{"Requests", "SpreadSheetID"});
+        final String API_Key = (String) Settings.getSetting(new String[]{"Requests, APIKey"});
 
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(
-            URI.create("https://sheets.googleapis.com/v4/spreadsheets/" + sheet_ID + "?" + API_Key + "&" + Grid_Data ))
+            URI.create("https://sheets.googleapis.com/v4/spreadsheets/" + sheet_ID + "?key=" + API_Key + "&includeGridData=true"))
             .build();
 
         client
