@@ -11,7 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import data.Member;
-import data.Month;
 import display.ApplicationWindow;
 import display.tabs.*;
 import main.Request;

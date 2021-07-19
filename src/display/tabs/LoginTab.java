@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 import data.Member;
 import display.ApplicationWindow;
 import main.Request;
-import settings.Information;
 import settings.Settings;
 
 public class LoginTab extends JPanel{

@@ -9,13 +9,29 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
-import data.*;
-import settings.Information;
+import data.Member;
 import settings.Settings;
 
 import org.json.JSONArray;
 
 public class Request {
+	// https://sheets.googleapis.com/v4/spreadsheets/1L88aiK9tt3bM2OZzvztkVLktJeiBv1XYzeIjrTg6vPE/?key=AIzaSyC3AAzbHKTV3G1Brywmak8uhbhYLaFN9AI
+	
+	// For testing purposes
+	public static void main(String[] args) {
+		Settings.retrieveSettings();
+		
+		int total = 0;
+		for(int i=0; i<10; i++) {
+			Time.startTimer("Member List Function");
+			Request.memberList();
+			total += Time.endTimer();
+		}
+		
+		total /= 10;
+		System.out.println("Average Time: " + total);
+	}
+	
 	/*
 	 * ---- Request the list of all members from the general sheet of the point spreadsheet ----
 	 */
@@ -71,7 +87,8 @@ public class Request {
     private static Member member = null;
     private static String[] headers;
     
-    public static Member member(String firstName, String lastName) {    	
+    public static Member member(String firstName, String lastName) {   
+    	Time.startTimer("Requesting Member Information");
     	// Finding the row number of the member in the general sheet
     	int rowNumber = Request.memberList().indexOf(lastName + ", " + firstName) + 1;
     	
@@ -109,6 +126,7 @@ public class Request {
         	.thenAccept(Request::createMember)
         	.join();
         
+        Time.endTimer();
     	return member;
     }
     private static void createHeaders(String s) {
@@ -168,13 +186,8 @@ public class Request {
     private static String[] name = new String[2];
     private static int rowNumber = -1;
     
-    public static void main(String[] args) {
-    	Settings.retrieveSettings();
-    	
-    	Request.events("April", "Julie", "Lin");
-    }
-    
     public static ArrayList<String[]> events(String month, String first, String last){
+    	Time.startTimer("Requesting Events (for a month and person)");
     	final String Sheet_ID = Settings.getHttpSetting("Spreadsheet ID");
         final String API_Key = Settings.getHttpSetting("API Key");
         
@@ -221,6 +234,7 @@ public class Request {
         	.thenAccept(Request::extractEvents)
         	.join();
         
+        Time.endTimer();
     	return events;
     }
     private static void findMemberRow(String s) {
@@ -285,6 +299,7 @@ public class Request {
     private static ArrayList<String> sheetList = new ArrayList<String>();
     
     public static ArrayList<String> sheets(){
+    	Time.startTimer("Requesting Sheets");
     	final String Sheet_ID = Settings.getHttpSetting("Spreadsheet ID");
         final String API_Key = Settings.getHttpSetting("API Key");
 
@@ -303,6 +318,7 @@ public class Request {
             .thenAccept(Request::extractSheets)
             .join();
         
+        Time.endTimer();
         return sheetList;
     }
     private static void extractSheets(String s) {

@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 
 import data.Member;
 import display.tabs.LoginTab;
-import settings.Information;
 
 import java.awt.event.*;
 

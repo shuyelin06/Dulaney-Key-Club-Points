@@ -3,7 +3,7 @@ package settings;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -13,18 +13,57 @@ import org.json.JSONStringer;
 import main.Request;
 
 public class Settings {
+	// Path of this file
 	private static String path = "./src/settings/";
+	// Name of the setting JSON file
 	private static String fileName = "settings.json";
 	
+	// Settings variable (where the settings are saved)
 	public static JSONObject settings = new JSONObject();
 	
-	// Method for testing the Settings class
-	public static void main(String[] args) {
-		instantiateSettings();
-		
-		retrieveSettings();
+	/*
+	 * --- Accessor Methods (to Retrieve Particular Settings) ---
+	 */
+	// Return the resolution setting (given a width/height specification)
+	public static int getResolution(String s) {	
+		return settings.getJSONArray("Application Settings").getJSONObject(0).getJSONObject("Resolution").getInt(s);
 	}
 	
+	// Returns the login password
+	public static String getLogin() {
+		return settings.getJSONArray("Application Settings").getJSONObject(0).getString("Login");
+	}
+	
+	// Returns a given HTTP Request Setting
+	public static String getHttpSetting(String s) {
+		return settings.getJSONArray("HTTP Request Settings").getJSONObject(0).getString(s);
+	}
+	
+	// Returns the name of the main sheet
+	public static String getMainSheetName() {
+		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Main Sheet").getString("Name");
+	}
+	
+	// Returns a format of the main sheet (given a column specification)
+	public static String getMainSheetFormat(String s) {
+		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Main Sheet").getJSONObject("Format").getString(s);
+	}
+	
+	// Returns the list of names of month sheets
+	public static String[] getMonthSheetList() {
+		JSONArray monthList = settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Month Sheets").getJSONArray("List");
+		
+		String[] output = new String[monthList.length()];
+		for(int i=0; i<monthList.length(); i++) {
+			output[i] = monthList.getString(i);
+		}
+		return output;
+	}
+	
+	// Returns the format of the month sheets (given a column specification)
+	public static String getMonthSheetFormat(String s) {
+		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Month Sheets").getJSONObject("Format").getString(s);
+	}
 	
 	// Rebuild the settings.json file (and variable) with default parameters
 	public static void instantiateSettings() {
@@ -92,55 +131,16 @@ public class Settings {
 		}});
 		
 		// Fill the JSON Array with all of the names of the month sheets
-		for(String s: Request.sheets()) {
+		ArrayList<String> sheets = Request.sheets();
+		for(String s: sheets) {
 			monthSheetList.put(s);
 		}
 		
-
 		// Save the settings to the settings.json file
 		saveSettings();
 	}
 	
-	// Return the resolution setting (given a width/height specification)
-	public static int getResolution(String s) {	
-		return settings.getJSONArray("Application Settings").getJSONObject(0).getJSONObject("Resolution").getInt(s);
-	}
 	
-	// Returns the login password
-	public static String getLogin() {
-		return settings.getJSONArray("Application Settings").getJSONObject(0).getString("Login");
-	}
-	
-	// Returns a given HTTP Request Setting
-	public static String getHttpSetting(String s) {
-		return settings.getJSONArray("HTTP Request Settings").getJSONObject(0).getString(s);
-	}
-	
-	// Returns the name of the main sheet
-	public static String getMainSheetName() {
-		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Main Sheet").getString("Name");
-	}
-	
-	// Returns a format of the main sheet (given a column specification)
-	public static String getMainSheetFormat(String s) {
-		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Main Sheet").getJSONObject("Format").getString(s);
-	}
-	
-	// Returns the list of names of month sheets
-	public static String[] getMonthSheetList() {
-		JSONArray monthList = settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Month Sheets").getJSONArray("List");
-		
-		String[] output = new String[monthList.length()];
-		for(int i=0; i<monthList.length(); i++) {
-			output[i] = monthList.getString(i);
-		}
-		return output;
-	}
-	
-	// Returns the format of the month sheets (given a column specification)
-	public static String getMonthSheetFormat(String s) {
-		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Month Sheets").getJSONObject("Format").getString(s);
-	}
 	
 	// Retrieve all settings from the settings.json file
 	public static void retrieveSettings() {
