@@ -5,24 +5,83 @@ import java.util.ArrayList;
 public class Member{
     private String firstName;
     private String lastName;
-    private ArrayList<Month> months = new ArrayList<Month>();
+    
+    private String grade;
+    private String dues;
+    
+    private String totalPoints;
+    
+    private ArrayList<String[]> monthlyPoints;
+    
+    public Member(String first, String last, String points) {
+    	this.lastName = last;
+    	this.firstName = first;
+    	
+    	this.totalPoints = points;
+    	
+    	monthlyPoints = new ArrayList<String[]>();
+    	
+    	grade = "NA";
+    	dues = "Not Paid";
+    }
 
-    // Accessor Methods
-    public String name(){
-        return lastName + ", " + firstName;
+    public String getInformation() {
+    	String output = 
+    			firstName + " " + lastName + "/n" +
+    			"Grade: " + grade + "/n" +
+    			"Dues: " + dues + "/n" + 
+    			"Total Points: " + totalPoints;
+    	
+    	for(String[] month: monthlyPoints) {
+    		output += "/n" + month[0] + ": " + month[1];
+    	}
+    	
+    	return output;
     }
-    public ArrayList<Month> getMonths(){
-        return months;
+    public void print() {
+    	System.out.println(firstName + " " + lastName);
+    	
+    	System.out.println("Total Points: " + totalPoints);
+    	System.out.println("Grade: " + grade);
+    	System.out.println("Dues: " + dues);
+    	
+    	for(String[] month: monthlyPoints) {
+    		System.out.println(month[0] + ": " + month[1]);
+    	}
+    }
+    /*
+     * --- Accessor Methods ---
+     */
+    public String getFirst() {
+    	return firstName;
+    }
+    public String getLast() {
+    	return lastName;
+    }
+    public String getGrade() {
+    	return grade;
+    }
+    public String getDues() {
+    	return dues;
+    }
+    
+    public String getTotalPoints() {
+    	return totalPoints;
+    }
+    public ArrayList<String[]> getMonthlyPoints(){
+    	return monthlyPoints;
     }
 
-    // Mutator Methods
-    public void setFirst(String first){
-        this.firstName = first;
+    /*
+     * --- Mutator Methods ---
+     */
+    public void duesPaid(String s) {
+    	dues = s;
     }
-    public void setLast(String last){
-        this.lastName = last;
+    public void grade(String s) {
+    	grade = s;
     }
-    public void addMonth(Month m){
-        this.months.add(0, m);
+    public void addMonth(String[] s) {
+    	monthlyPoints.add(s);
     }
 }

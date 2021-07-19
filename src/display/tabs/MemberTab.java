@@ -2,6 +2,7 @@ package display.tabs;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,18 +11,31 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import display.ApplicationWindow;
+import main.Request;
+import settings.Settings;
 import data.Member;
 
 public class MemberTab extends JPanel{
     private static final long serialVersionUID = -4249464756785891838L;
     
+    // The Application Window
     ApplicationWindow window;
-    ArrayList<Member> list;
+    
+    // The member that the tab was constructed around.
+    Member member;
+    
+    // The dropdown box (to select members)
     JComboBox<String> dropdown;
-    Button submit = new Button("Submit");
+    
+    String first;
+    String last;
 
-    public MemberTab(ArrayList<Member> members, ApplicationWindow window){
-        this.list = members;
+    public MemberTab(ApplicationWindow window, String first, String last){
+    	this.first = first;
+    	this.last = last;
+    	
+    	this.member = Request.member(first, last);
+    	
         this.window = window;
 
         this.setBackground(new Color(150, 150, 150));
@@ -30,31 +44,35 @@ public class MemberTab extends JPanel{
     }
 
     private void setUp(){
-        // Setting up dropdown values
-        String[] members = new String[list.size()];
-
-        ArrayList<String> memberNames = new ArrayList<String>();
-        for(Member m: list){
-            memberNames.add(m.name());
-        }
-        
-        members = memberNames.toArray(members);
-        dropdown = new JComboBox<String>(members);
-        
-        this.add(dropdown);
-
-        // Setting up submit button
-        submit.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e){
-                    int index = (int) dropdown.getSelectedIndex();
+    	// Name
+    	this.add(new Label(member.getFirst() + " " + member.getLast()));
+    	
+    	// Grade, Dues, Total Points
+    	this.add(new Label("Grade: " + member.getGrade()));
+    	this.add(new Label("Dues: " + member.getDues()));
+    	
+    	this.add(new Label("Total Points: " + member.getTotalPoints()));
+    	
+    	// Monthly Points
+    	for(String[] month: member.getMonthlyPoints()) {
+    		this.add(new Label(month[0] + ": " + month[1]));
+    	}
+    	
+    	// Additional Information (MonthTab)
+    	String[] availableMonths = Settings.getMonthSheetList();
+    	for(String month: availableMonths) {
+    		Button monthButton = new Button(month);
+    		
+    		monthButton.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				MonthTab monthtab = new MonthTab(monthButton.getLabel(), first, last, window);
                     
-                    Member selectedMember = list.get(index);
-
-                    MonthTab monthtab = new MonthTab(selectedMember, window);
-                    window.addTab("Months", monthtab, 1);
-                }
-            });
-        this.add(submit);
+    				window.removeTab(2);
+                    window.addTab(monthButton.getLabel(), monthtab, 2);
+    			}
+    		});
+    		
+    		this.add(monthButton);
+    	}
     }
 }

@@ -6,8 +6,11 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+
+import main.Request;
 
 public class Settings {
 	private static String path = "./src/settings/";
@@ -18,6 +21,8 @@ public class Settings {
 	// Method for testing the Settings class
 	public static void main(String[] args) {
 		instantiateSettings();
+		
+		retrieveSettings();
 	}
 	
 	
@@ -28,46 +33,113 @@ public class Settings {
 		
 		// --- Add settings to the JSON object ---
 		
-		// Adding resolution 
-		settings.append("Resolution", new JSONObject(){{
-			put("Width", 750);
-			put("Height", 500);
+		/*
+		 * Application Settings: Contains settings pertaining to the application itself
+		 * Currently Has: Resolution, Login Password
+		 */
+		settings.append("Application Settings", new JSONObject() {{
+			put("Resolution", new JSONObject() {{
+				put("Width", 750);
+				put("Height", 750);
+			}});
+			
+			put("Login", "DHSKeyClub");
 		}});
 		
-		// Adding the login password
-		settings.append("Login", new JSONObject(){{
-			put("Password", "ubfkr");
+		/*
+		 * HTTP Request Settings: Contains settings pertaining to making HTTP requests to the Google Sheets API service
+		 * Currently Has: API Key, Point Spreadsheet ID 
+		 */
+		settings.append("HTTP Request Settings", new JSONObject() {{
+			put("API Key", "AIzaSyC3AAzbHKTV3G1Brywmak8uhbhYLaFN9AI");
+			
+			put("Spreadsheet ID", "1L88aiK9tt3bM2OZzvztkVLktJeiBv1XYzeIjrTg6vPE");
 		}});
 		
-		// Adding request options
-		settings.append("Requests", new JSONObject(){{
-			put("APIKey", "AIzaSyC3AAzbHKTV3G1Brywmak8uhbhYLaFN9AI");
-			put("SpreadsheetID", "1L88aiK9tt3bM2OZzvztkVLktJeiBv1XYzeIjrTg6vPE");
+		/*
+		 * Point Spreadsheet Settings: Contains the Format of the Point Spreadsheet
+		 * Currently Has: Columns of the main/month sheets, and their names
+		 */
+		// Create a JSONArray of all of the month sheets (to add to the settings)
+		JSONArray monthSheetList = new JSONArray();
+		
+		settings.append("Point Spreadsheet", new JSONObject() {{
+			put("Main Sheet", new JSONObject() {{
+				put("Name", "General");
+				
+				put("Format", new JSONObject() {{
+					put("Last Name Column", "A");
+					put("First Name Column", "B");
+					
+					put("Grade Column", "C");
+					put("Dues Paid Column", "D");
+					
+					put("Total Points Column", "E");
+				}});
+			}});
+			
+			put("Month Sheets", new JSONObject() {{
+				put("List", monthSheetList);
+				
+				put("Format", new JSONObject() {{
+					put("Last Name Column", "B");
+					put("First Name Column", "C");
+					
+					put("Total Points Column", "E");
+				}});
+			}});
+			
 		}});
+		
+		// Fill the JSON Array with all of the names of the month sheets
+		for(String s: Request.sheets()) {
+			monthSheetList.put(s);
+		}
+		
 
 		// Save the settings to the settings.json file
 		saveSettings();
 	}
 	
-	// Given a String path, return the setting associated with it
-	public static Object getSetting(String[] path) {
-		JSONObject retrieval = settings;
+	// Return the resolution setting (given a width/height specification)
+	public static int getResolution(String s) {	
+		return settings.getJSONArray("Application Settings").getJSONObject(0).getJSONObject("Resolution").getInt(s);
+	}
+	
+	// Returns the login password
+	public static String getLogin() {
+		return settings.getJSONArray("Application Settings").getJSONObject(0).getString("Login");
+	}
+	
+	// Returns a given HTTP Request Setting
+	public static String getHttpSetting(String s) {
+		return settings.getJSONArray("HTTP Request Settings").getJSONObject(0).getString(s);
+	}
+	
+	// Returns the name of the main sheet
+	public static String getMainSheetName() {
+		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Main Sheet").getString("Name");
+	}
+	
+	// Returns a format of the main sheet (given a column specification)
+	public static String getMainSheetFormat(String s) {
+		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Main Sheet").getJSONObject("Format").getString(s);
+	}
+	
+	// Returns the list of names of month sheets
+	public static String[] getMonthSheetList() {
+		JSONArray monthList = settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Month Sheets").getJSONArray("List");
 		
-		for(int i=0; i<path.length; i++) {
-			System.out.println(retrieval);
-			if(i == path.length - 1) {
-				System.out.println(path[i]);
-				return retrieval.get(path[i]);
-			} else {
-				System.out.println(path[i]);
-				retrieval = retrieval
-						.getJSONArray(path[i])
-						.getJSONObject(0);
-			}
+		String[] output = new String[monthList.length()];
+		for(int i=0; i<monthList.length(); i++) {
+			output[i] = monthList.getString(i);
 		}
-		
-		// If no setting is found, return null
-		return null;
+		return output;
+	}
+	
+	// Returns the format of the month sheets (given a column specification)
+	public static String getMonthSheetFormat(String s) {
+		return settings.getJSONArray("Point Spreadsheet").getJSONObject(0).getJSONObject("Month Sheets").getJSONObject("Format").getString(s);
 	}
 	
 	// Retrieve all settings from the settings.json file
@@ -94,6 +166,8 @@ public class Settings {
 				
 			}
 			
+			reader.close();
+			
 			// Parse the string into a JSONObject
 			settings = new JSONObject(s);
 		} 
@@ -111,8 +185,6 @@ public class Settings {
 			
 			file.write(settings.toString());
 			file.close();
-			
-			System.out.println("Settings successfully saved");
 		} 
 		catch(IOException error) {
 			System.out.println("An error occured when saving settings");

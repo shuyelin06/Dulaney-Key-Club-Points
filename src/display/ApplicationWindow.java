@@ -17,13 +17,15 @@ import java.awt.event.*;
 public class ApplicationWindow extends JFrame{
     private static final long serialVersionUID = 6856031828783739192L;
     
+    // Where all of the tabs will be located
     private JTabbedPane tabbedpane = new JTabbedPane();
 
-    public ApplicationWindow(int x, int y){
+    // Constructor which takes in a width and a height
+    public ApplicationWindow(int width, int height){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setTitle("Dulaney Key Club Points");
-        this.setSize(new Dimension(x,y));
+        this.setSize(new Dimension(width, height));
         this.setResizable(false);
 
         this.getContentPane().setBackground(new Color(211, 211, 211));
@@ -31,21 +33,17 @@ public class ApplicationWindow extends JFrame{
         tabbedpane.setTabPlacement(JTabbedPane.TOP);
     }
 
-    public void setUp(ArrayList<Member> list){
-        LoginTab lTab = new LoginTab(list, this);
-        addTab("Login", lTab, 0);
+    // Sets up the Application Window
+    public void setUp(){
+        LoginTab loginTab = new LoginTab(this);
+        addTab("Login", loginTab, 0);
         
         this.add(tabbedpane);
+        
+        this.setVisible(true);
     }
-    public void removeTab(int index){
-        try{
-            tabbedpane.remove(index);
-        } catch(Exception err){
-
-        } finally{
-            update();
-        }
-    }
+    
+    // Adds a tab to the tabbed pane
     public void addTab(String title, JPanel p, int index){
         try{
             tabbedpane.setComponentAt(index, p);
@@ -59,6 +57,18 @@ public class ApplicationWindow extends JFrame{
         }
         
     }
+    
+    // Removes a tab from the tabbed pane
+    public void removeTab(int index){
+        try{
+            tabbedpane.remove(index);
+        } catch(Exception err){
+
+        } finally{
+            update();
+        }
+    }
+
     private void update(){
         this.revalidate();
     }
