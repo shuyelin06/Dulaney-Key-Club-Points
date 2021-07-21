@@ -1,6 +1,7 @@
 package display.tabs;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +10,7 @@ import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
@@ -84,7 +86,7 @@ public class MonthTab extends JPanel{
     	infoConstraints.insets = new Insets(10, 10, 10, 10);
     	infoConstraints.fill = GridBagConstraints.BOTH;
     	
-    	informationPanel.setLayout(new GridLayout(events.size(), 2, 5, 10));
+    	informationPanel.setLayout(new GridLayout(events.size(), 3, 5, 10));
     	informationPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.black), new EmptyBorder(10, 10, 10, 10)));
     	
     	for(String[] event: events) {
@@ -93,6 +95,8 @@ public class MonthTab extends JPanel{
 			{
 				setFont(new Font("Arial", Font.BOLD, 25));
     		}});
+    		
+    		informationPanel.add(Box.createRigidArea(new Dimension(25, 0)));
     		
     		informationPanel.add(new JLabel(event[1]) {
 				private static final long serialVersionUID = 1L;
