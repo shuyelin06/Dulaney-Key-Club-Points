@@ -1,34 +1,39 @@
 package display;
-import java.util.ArrayList;
+
 import java.awt.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
-import data.Member;
 import display.tabs.LoginTab;
-
-import java.awt.event.*;
 
 public class ApplicationWindow extends JFrame{
     private static final long serialVersionUID = 6856031828783739192L;
     
     // Where all of the tabs will be located
     private JTabbedPane tabbedpane = new JTabbedPane();
-
+    
     // Constructor which takes in a width and a height
     public ApplicationWindow(int width, int height){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Title Setting
         this.setTitle("Dulaney Key Club Points");
+        
+        // Resolution Setting
         this.setSize(new Dimension(width, height));
         this.setResizable(false);
 
+        // Logo Setting
+        this.setIconImage(new ImageIcon("./src/resources/KeyClubLogo.png").getImage());
+        
+        // Background Setting
         this.getContentPane().setBackground(new Color(211, 211, 211));
 
+        this.add(tabbedpane);
+        
         tabbedpane.setTabPlacement(JTabbedPane.TOP);
     }
 
@@ -37,7 +42,7 @@ public class ApplicationWindow extends JFrame{
         LoginTab loginTab = new LoginTab(this);
         addTab("Login", loginTab, 0);
         
-        this.add(tabbedpane);
+        
         
         this.setVisible(true);
     }
