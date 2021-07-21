@@ -1,23 +1,16 @@
 package settings;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import main.Request;
 
-public class Settings {
-	// Path of this file
-	private static String path = "./src/settings/";
-	// Name of the setting JSON file
-	private static String fileName = "settings.json";
-	
+public class Settings {	
 	// Settings variable (where the settings are saved)
 	public static JSONObject settings = new JSONObject();
 	
@@ -141,6 +134,11 @@ public class Settings {
 	}
 	
 	
+	public static void main(String[] args) {
+		retrieveSettings();
+		
+		System.out.println(settings);
+	}
 	
 	// Retrieve all settings from the settings.json file
 	public static void retrieveSettings() {
@@ -149,14 +147,15 @@ public class Settings {
 		
 		// Read the settings.json file and parse it into a JSONObject
 		try {
-			FileReader reader = new FileReader(path + fileName);
+			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			InputStream stream = classLoader.getResourceAsStream("settings.json");
 			
 			// Read the file, and append each character to a string
-			String s = new String("");
+			String s = "";
 			
 			boolean nextChar = true;
 			while(nextChar) {
-				int encoding = reader.read();
+				int encoding = stream.read();
 				
 				if(encoding == -1) {
 					nextChar = false;
@@ -166,12 +165,12 @@ public class Settings {
 				
 			}
 			
-			reader.close();
+			stream.close();
 			
-			// Parse the string into a JSONObject
+			// Parsese the string into a JSONObject
 			settings = new JSONObject(s);
 		} 
-		catch(IOException error) {
+		catch(Exception error) {
 			System.out.println("An error occured when retrieving settings");
 			System.out.println(error);
 		}
@@ -181,7 +180,7 @@ public class Settings {
 	// Save the JSON object and its values into the settings.json file
 	public static void saveSettings() {
 		try {			
-			FileWriter file = new FileWriter(path + fileName);
+			FileWriter file = new FileWriter(ClassLoader.getSystemResource("settings.json").getFile());
 			
 			file.write(settings.toString());
 			file.close();

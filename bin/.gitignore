@@ -1,5 +1,4 @@
-/main/
-/display/
 /settings/
-/data/
-/resources/
+/display/
+/settings.json
+/main/

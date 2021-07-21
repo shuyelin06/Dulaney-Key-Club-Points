@@ -27,7 +27,9 @@ public class ApplicationWindow extends JFrame{
         this.setResizable(false);
 
         // Logo Setting
-        this.setIconImage(new ImageIcon("./src/resources/KeyClubLogo.png").getImage());
+        ImageIcon logo = new ImageIcon(ClassLoader.getSystemResource("KeyClubLogo.png"));
+        
+        this.setIconImage(logo.getImage());
         
         // Background Setting
         this.getContentPane().setBackground(new Color(211, 211, 211));

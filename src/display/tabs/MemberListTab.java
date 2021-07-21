@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import display.ApplicationWindow;
 import main.Request;
-import data.Member;
 
 public class MemberListTab extends JPanel{
 	// Dunno what thsi does

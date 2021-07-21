@@ -1,17 +1,14 @@
 package display.tabs;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -56,7 +53,7 @@ public class LoginTab extends JPanel{
         /*
          * Instantiating Key Club Logo
          */
-        JLabel logo = new JLabel(new ImageIcon("./src/resources/KeyClubLogo.png"));
+        JLabel logo = new JLabel(new ImageIcon(ClassLoader.getSystemResource("KeyClubLogo.png")));
         logo.setPreferredSize(new Dimension(300, 300));
         
         GridBagConstraints logoConstraints = new GridBagConstraints();

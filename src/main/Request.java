@@ -5,7 +5,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONObject;
 
@@ -16,21 +15,6 @@ import org.json.JSONArray;
 
 public class Request {
 	// https://sheets.googleapis.com/v4/spreadsheets/1L88aiK9tt3bM2OZzvztkVLktJeiBv1XYzeIjrTg6vPE/?key=AIzaSyC3AAzbHKTV3G1Brywmak8uhbhYLaFN9AI
-	
-	// For testing purposes
-	public static void main(String[] args) {
-		Settings.retrieveSettings();
-		
-		int total = 0;
-		for(int i=0; i<10; i++) {
-			Time.startTimer("Member List Function");
-			Request.memberList();
-			total += Time.endTimer();
-		}
-		
-		total /= 10;
-		System.out.println("Average Time: " + total);
-	}
 	
 	/*
 	 * ---- Request the list of all members from the general sheet of the point spreadsheet ----
