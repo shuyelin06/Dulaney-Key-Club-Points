@@ -38,15 +38,6 @@ public class MemberTab extends JPanel{
     
     // The dropdown box (to select members)
     JComboBox<String> dropdown;
-
-    public static void main(String[] args) {
-    	Settings.retrieveSettings();
-    	
-    	ApplicationWindow window = new ApplicationWindow(750, 750);
-    	
-    	window.addTab("Test", new MemberTab(window, "Julie", "Lin"), 1);
-    	window.setVisible(true);
-    }
     
     public MemberTab(ApplicationWindow window, String first, String last){
     	this.member = Request.member(first, last);

@@ -1,18 +1,20 @@
 package display.tabs;
 
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
-import data.Member;
 import display.ApplicationWindow;
-import display.tabs.*;
 import main.Request;
 
 public class MonthTab extends JPanel{
@@ -42,13 +44,63 @@ public class MonthTab extends JPanel{
         events = Request.events(month, first, last);
         
         this.setBackground(new Color(150, 150, 150));
+        this.setLayout(new GridBagLayout());
         
         setUp();
     }
 
     private void setUp(){
+    	/*
+    	 * Header Panel
+    	 */
+    	JPanel headerPanel = new JPanel();
+    	
+    	GridBagConstraints headerConstraints = new GridBagConstraints();
+    	
+    	headerConstraints.gridx = 0;
+    	headerConstraints.gridy = 0;
+    	headerConstraints.insets = new Insets(10, 10, 10, 10);
+    	headerConstraints.fill = GridBagConstraints.BOTH;
+    	
+    	headerPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.black), new EmptyBorder(10, 10, 10, 10)));
+    	
+    	headerPanel.add(new JLabel(first + " " + last + "'s " + month + " Points") {
+			private static final long serialVersionUID = 1L;
+			{
+				setFont(new Font("Arial", Font.BOLD, 40));
+    	}});
+    	
+    	this.add(headerPanel, headerConstraints);
+    	
+    	/*
+    	 * Information Panel (Contains Event Name and Points)
+    	 */
+    	JPanel informationPanel = new JPanel();
+    	
+    	GridBagConstraints infoConstraints = new GridBagConstraints();
+    	
+    	infoConstraints.gridx = 0;
+    	infoConstraints.gridy = 1;
+    	infoConstraints.insets = new Insets(10, 10, 10, 10);
+    	infoConstraints.fill = GridBagConstraints.BOTH;
+    	
+    	informationPanel.setLayout(new GridLayout(events.size(), 2, 5, 10));
+    	informationPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.black), new EmptyBorder(10, 10, 10, 10)));
+    	
     	for(String[] event: events) {
-    		this.add(new Label(event[0] + ": " + event[1]));
+    		informationPanel.add(new JLabel(event[0]) {
+				private static final long serialVersionUID = 1L;
+			{
+				setFont(new Font("Arial", Font.BOLD, 25));
+    		}});
+    		
+    		informationPanel.add(new JLabel(event[1]) {
+				private static final long serialVersionUID = 1L;
+			{
+				setFont(new Font("Arial", Font.BOLD, 25));
+    		}});
     	}
+    	
+    	this.add(informationPanel, infoConstraints);
     }
 }
