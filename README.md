@@ -30,14 +30,14 @@ java -version
 ```
 1. If you receive an error telling you that 'Java is not recognized as a command', you may need to set up your Java environment variable.
     1. <a href="https://www.csestack.org/java-environment-variables-setup-jdk-installation-guide/#:~:text=Java%20Environment%20Variables%20Setup%20Steps%201%20Right-click%20on,same%20on%20your%20system.%208%20Click%20on%20OK.">This guide (for windows) may help</a>
-1. If the version successfully prints, but the runtime environment is below 16.0.2, please follow the installation steps again to redownloading the runtime environment.
+1. If the version successfully prints, but the runtime environment is below 16.0.2, please follow the installation steps again to redownload the runtime environment.
 
 
 ## How to Use
 In order to view your points, you must enter in a valid password. This password will be provided by your Membership Secretary, so be sure to contact them!
 
-After entering a valid password, select a member from the dropdown, and click "Submit". A new tab should appear on the top with the member's name. In this tab, you can view the member's grade, dues paid, and point information. If you want to view more detailed information on their points, you can click one of the month buttons on the bottom left, which will open a new tab to show the events the member participated in (and the corresponding points) for that month.
+After entering a valid password, select a member from the dropdown, and click "Submit". A new tab should appear on the top with the member's name. In this tab, you can view the member's grade, dues paid, and point information. If you want to view more detailed information on their points, you can click one of the month buttons on the bottom left, which will create a new tab showing the events the member participated in for that month.
 
-If you select a new member while another member's tab is present, their tab will be replaced with the new selected member. There is a visual bug with the name of the new member tab (where the tab's name is a month and not the member's name), but the information is still correct.
+If you select a new member while another member's tab is present, their tab will be replaced with the new selected member. There is currently a visual bug with the name of the new member tab, but regardless, the information displayed is correct.
 
 Enjoy!
