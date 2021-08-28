@@ -5,20 +5,20 @@ This application was developed by Shu-Ye Joshua Lin, DHS Key Club Membership Sec
 
 This application was developed completely in Java, and was created for use by members of the Dulaney High School Key Club. It is intended to function with the accompanying information system which was introduced in the 2020-2021 Service Year.
 
-The most recent version of the Java runtime environment is recommended to run the application. This application was created for the Java SE 16.0.2 runtime environment.
+The most recent version of the Java runtime environment is recommended to run the application. This application was created to be ran in the Java SE 16.0.2 runtime environment.
 
 
 ## Installation
 In order to install the Dulaney Key Point Application, please follow the steps below.
 
 1. Download the application's jar file <a href="https://github.com/shuyelin06/Dulaney-Key-Club-Points/blob/main/deployment/KeyClubPoints.jar">here</a>
-  1. Navigate to the link above
-  1. Click the "Download" button on the right side of the file preview.
-  1. If your browser blocks the download, click the three dots to the right of the download, and click "Keep" so the download continues.
+    1. Navigate to the link above
+    1. Click the "Download" button on the right side of the file preview.
+    1. If your browser blocks the download, click the three dots to the right of the download, and click "Keep" so the download continues.
 1. Download the Java SE 16.0.2 runtime environment or later. 
-  1. Navigate to <a href = "https://www.oracle.com/java/technologies/javase-jdk16-downloads.html"> this link </a>
-  1. Select the appropriate download for your operating system. You may need to create an Oracle account for the download to begin.
-  1. Run the downloaded file, and complete the Java set-up wizard. Once you can click the "Finish" button, you should be set.
+    1. Navigate to <a href = "https://www.oracle.com/java/technologies/javase-jdk16-downloads.html"> this link </a>
+    1. Select the appropriate download for your operating system. You may need to create an Oracle account for the download to begin.
+    1. Run the downloaded file, and complete the Java set-up wizard. Once you can click the "Finish" button, you should be set.
 1. Try running the app by running the Jar file. You can do this by double-clicking the jar file.
 1. If an application wnidow opens, you've successfully installed the app! You may now use it to view your points.
 
@@ -29,8 +29,9 @@ If you are having issues opening the application, make sure that you have the mo
 java -version
 ```
 1. If you receive an error telling you that 'Java is not recognized as a command', you may need to set up your Java environment variable.
-  1. <a href="https://www.csestack.org/java-environment-variables-setup-jdk-installation-guide/#:~:text=Java%20Environment%20Variables%20Setup%20Steps%201%20Right-click%20on,same%20on%20your%20system.%208%20Click%20on%20OK.">This guide (for windows) may help</a>
+    1. <a href="https://www.csestack.org/java-environment-variables-setup-jdk-installation-guide/#:~:text=Java%20Environment%20Variables%20Setup%20Steps%201%20Right-click%20on,same%20on%20your%20system.%208%20Click%20on%20OK.">This guide (for windows) may help</a>
 1. If the version successfully prints, but the runtime environment is below 16.0.2, please follow the installation steps again to redownloading the runtime environment.
+
 
 ## How to Use
 In order to view your points, you must enter in a valid password. This password will be provided by your Membership Secretary, so be sure to contact them!
